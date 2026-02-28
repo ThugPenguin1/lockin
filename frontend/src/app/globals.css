@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+  --bg: #0a0a0f;
+  --card: #12121a;
+  --border: #1e1e2e;
+  --primary: #6c5ce7;
+  --primary-light: #a29bfe;
+  --secondary: #00cec9;
+  --accent: #fd79a8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: #f0f0f5;
+  font-family: 'Inter', system-ui, sans-serif;
+  min-height: 100vh;
+}
+
+@layer utilities {
+  .glass {
+    background: rgba(18, 18, 26, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(30, 30, 46, 0.5);
+  }
+
+  .gradient-primary {
+    background: linear-gradient(135deg, #6c5ce7, #a29bfe);
+  }
+
+  .gradient-success {
+    background: linear-gradient(135deg, #00b894, #00cec9);
+  }
+
+  .gradient-accent {
+    background: linear-gradient(135deg, #fd79a8, #e17055);
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, #6c5ce7, #00cec9);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .focus-ring {
+    @apply focus:outline-none focus:ring-2 focus:ring-lockin-primary focus:ring-offset-2 focus:ring-offset-lockin-bg;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
