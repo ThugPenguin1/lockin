@@ -1,224 +1,163 @@
 "use client";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAppStore } from "@/lib/store";
+
 import { motion } from "framer-motion";
-import { Lock, Users, Brain, Zap, ChevronRight } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Target, Brain, Sprout, Zap, ArrowRight } from "lucide-react";
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: i * 0.15, duration: 0.5 },
+  }),
+};
 
 export default function LandingPage() {
-  const router = useRouter();
-  const { token } = useAppStore();
-
-  useEffect(() => {
-    if (token) {
-      router.push("/lobby");
-    }
-  }, [token, router]);
-
   return (
-    <div className="min-h-screen bg-lockin-bg overflow-hidden">
-      <nav className="fixed top-0 w-full z-50 glass">
-        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center">
-              <Lock className="w-4 h-4 text-white" />
-            </div>
-            <span className="text-xl font-bold">LockIn</span>
-          </div>
-          <div className="flex gap-3">
-            <button
-              onClick={() => router.push("/auth?mode=login")}
-              className="px-4 py-2 text-sm text-lockin-text-muted hover:text-white transition-colors"
-            >
-              Log in
-            </button>
-            <button
-              onClick={() => router.push("/auth?mode=register")}
-              className="px-4 py-2 text-sm gradient-primary rounded-lg text-white font-medium hover:opacity-90 transition-opacity"
-            >
-              Get Started
-            </button>
-          </div>
-        </div>
-      </nav>
-
-      <section className="pt-32 pb-20 px-6">
-        <div className="max-w-4xl mx-auto text-center">
+    <div className="min-h-screen bg-slate-950">
+      {/* Hero */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-b from-sky-500/5 via-transparent to-transparent" />
+        <div className="max-w-5xl mx-auto px-6 pt-20 pb-16 text-center relative">
           <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex items-center justify-center gap-2 mb-8"
+          >
+            <div className="w-10 h-10 rounded-xl bg-sky-500/20 flex items-center justify-center">
+              <Zap className="h-5 w-5 text-sky-400" />
+            </div>
+            <span className="text-xl font-semibold text-slate-50">Circadian</span>
+          </motion.div>
+
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            className="text-4xl md:text-6xl font-bold text-slate-50 leading-tight mb-6"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass text-sm text-lockin-primary-light mb-8">
-              <Zap className="w-3.5 h-3.5" />
-              Powered by on-device AI
-            </div>
-            <h1 className="text-5xl md:text-7xl font-black leading-tight mb-6">
-              Your friends are <br />
-              <span className="text-gradient">locked in.</span>
-              <br />
-              Are you?
-            </h1>
-            <p className="text-lg md:text-xl text-lockin-text-muted max-w-2xl mx-auto mb-10">
-              The social study platform that uses AI-powered attention tracking
-              and friend group accountability to turn procrastination into productivity.
-              No video calls. No strangers. Just your squad.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button
-                onClick={() => router.push("/auth?mode=register")}
-                className="px-8 py-4 gradient-primary rounded-xl text-white font-semibold text-lg hover:opacity-90 transition-all animate-glow flex items-center justify-center gap-2"
-              >
-                Start Locking In
-                <ChevronRight className="w-5 h-5" />
-              </button>
-              <button
-                onClick={() => {
-                  document.getElementById("features")?.scrollIntoView({ behavior: "smooth" });
-                }}
-                className="px-8 py-4 glass rounded-xl text-lockin-text font-medium text-lg hover:bg-lockin-card transition-colors"
-              >
-                See How It Works
-              </button>
-            </div>
-          </motion.div>
+            Stop managing time.
+            <br />
+            <span className="text-sky-400">Start managing energy.</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25, duration: 0.6 }}
+            className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10"
+          >
+            Circadian reads your energy and tells you the ONE thing to do right
+            now. No overwhelm. Just flow.
+          </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="mt-16 glass rounded-2xl p-8 max-w-3xl mx-auto"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.4, duration: 0.4 }}
           >
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-3 h-3 rounded-full bg-red-500" />
-              <div className="w-3 h-3 rounded-full bg-yellow-500" />
-              <div className="w-3 h-3 rounded-full bg-green-500" />
-              <span className="text-lockin-text-muted text-sm ml-2">LockIn Session — Study Squad</span>
-            </div>
-            <div className="grid grid-cols-3 gap-4 mb-6">
-              {[
-                { name: "Amy", time: "1h 10m", score: 92, status: "On fire" },
-                { name: "Kevin", time: "1h 35m", score: 88, status: "Focused" },
-                { name: "You", time: "0h 23m", score: 82, status: "Focused" },
-              ].map((p) => (
-                <div key={p.name} className="bg-lockin-bg rounded-xl p-4 text-center">
-                  <div className="w-10 h-10 rounded-full gradient-success mx-auto mb-2 flex items-center justify-center text-sm font-bold">
-                    {p.name[0]}
-                  </div>
-                  <div className="font-semibold text-sm">{p.name}</div>
-                  <div className="text-lockin-text-muted text-xs">{p.time}</div>
-                  <div className="text-lockin-secondary text-xs font-medium mt-1">{p.status}</div>
-                </div>
-              ))}
-            </div>
-            <div className="bg-lockin-bg rounded-xl p-4">
-              <div className="flex justify-between items-center mb-2">
-                <span className="text-sm text-lockin-text-muted">Your focus</span>
-                <span className="text-sm font-mono font-bold text-lockin-secondary">82%</span>
-              </div>
-              <div className="w-full bg-lockin-border rounded-full h-3">
-                <div className="gradient-success h-3 rounded-full transition-all" style={{ width: "82%" }} />
-              </div>
-            </div>
+            <Link href="/dashboard">
+              <Button size="lg" className="text-base gap-2 px-8">
+                Get Started <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
           </motion.div>
         </div>
       </section>
 
-      <section id="features" className="py-20 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-4">
-            Why LockIn <span className="text-gradient">works</span>
-          </h2>
-          <p className="text-lockin-text-muted text-center mb-16 max-w-2xl mx-auto">
-            We don&apos;t fight procrastination with willpower. We fight it with the most powerful force in human psychology: not wanting to let your friends down.
-          </p>
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: Users,
-                title: "Squad Accountability",
-                desc: "See your friends studying in real-time. One tap to join. No coordination friction, no excuses.",
-                color: "from-lockin-primary to-lockin-primary-light",
-              },
-              {
-                icon: Brain,
-                title: "AI Attention Tracking",
-                desc: "On-device computer vision detects when you drift. Smart nudges pull you back — powered by your friend group's status.",
-                color: "from-lockin-secondary to-emerald-400",
-              },
-              {
-                icon: Zap,
-                title: "Smart Insights",
-                desc: "ML analyzes your patterns to find your optimal study partners, times, and group sizes. Data-driven productivity.",
-                color: "from-lockin-accent to-orange-400",
-              },
-            ].map((f, i) => (
-              <motion.div
-                key={f.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.15 }}
-                viewport={{ once: true }}
-                className="glass rounded-2xl p-8 hover:border-lockin-primary/30 transition-colors"
-              >
-                <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${f.color} flex items-center justify-center mb-4`}>
-                  <f.icon className="w-6 h-6 text-white" />
-                </div>
-                <h3 className="text-xl font-semibold mb-3">{f.title}</h3>
-                <p className="text-lockin-text-muted leading-relaxed">{f.desc}</p>
-              </motion.div>
-            ))}
-          </div>
+      {/* Features */}
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <div className="grid md:grid-cols-3 gap-6">
+          {[
+            {
+              icon: Target,
+              title: "One Task, Not Ten",
+              desc: "Your energy determines your best next move. One clear recommendation, not a wall of todos.",
+              i: 0,
+            },
+            {
+              icon: Brain,
+              title: "Study Smarter, Not Longer",
+              desc: "Devil's Advocate AI challenges your notes so you truly understand — not just memorize.",
+              i: 1,
+            },
+            {
+              icon: Sprout,
+              title: "Grow Your Mind Garden",
+              desc: "Every task, study session, and wellness action grows a living garden. Progress you can see.",
+              i: 2,
+            },
+          ].map((f) => (
+            <motion.div
+              key={f.title}
+              custom={f.i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={fadeUp}
+            >
+              <Card className="h-full bg-slate-800/30 border-slate-700/50 hover:border-sky-500/30 transition-colors">
+                <CardContent className="p-6">
+                  <f.icon className="h-8 w-8 text-sky-400 mb-4" />
+                  <h3 className="text-lg font-semibold text-slate-50 mb-2">{f.title}</h3>
+                  <p className="text-sm text-slate-400 leading-relaxed">{f.desc}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      <section className="py-20 px-6 bg-lockin-card/50">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Privacy is <span className="text-gradient">non-negotiable</span>
-          </h2>
-          <p className="text-lockin-text-muted max-w-2xl mx-auto mb-12">
-            Your camera feed never leaves your device. Our AI runs entirely in your browser using edge computing.
-            No video is transmitted, stored, or seen by anyone — ever.
-          </p>
-          <div className="grid sm:grid-cols-3 gap-6">
-            {[
-              { stat: "0 bytes", label: "of video uploaded" },
-              { stat: "100%", label: "on-device processing" },
-              { stat: "Zero", label: "server-side camera access" },
-            ].map((s) => (
-              <div key={s.label} className="glass rounded-xl p-6">
-                <div className="text-3xl font-black text-gradient mb-2">{s.stat}</div>
-                <div className="text-sm text-lockin-text-muted">{s.label}</div>
+      {/* How it works */}
+      <section className="max-w-5xl mx-auto px-6 py-16">
+        <motion.h2
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={fadeUp}
+          custom={0}
+          className="text-2xl md:text-3xl font-bold text-center text-slate-50 mb-12"
+        >
+          How It Works
+        </motion.h2>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { step: "1", title: "Check your energy", desc: "5 seconds. Slide or play a reflex game.", emoji: "⚡" },
+            { step: "2", title: "Get your ONE thing", desc: "AI-powered recommendation matched to your state.", emoji: "🎯" },
+            { step: "3", title: "Focus, finish, grow", desc: "Adaptive timer. Complete tasks. Watch your garden bloom.", emoji: "🌱" },
+          ].map((s, i) => (
+            <motion.div
+              key={s.step}
+              custom={i}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-50px" }}
+              variants={fadeUp}
+              className="text-center"
+            >
+              <div className="w-14 h-14 rounded-full bg-sky-500/20 flex items-center justify-center mx-auto mb-4 text-2xl">
+                {s.emoji}
               </div>
-            ))}
-          </div>
+              <p className="text-xs text-sky-400 font-medium mb-1">Step {s.step}</p>
+              <h3 className="text-lg font-semibold text-slate-50 mb-2">{s.title}</h3>
+              <p className="text-sm text-slate-400">{s.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      <section className="py-20 px-6">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to lock in?</h2>
-          <button
-            onClick={() => router.push("/auth?mode=register")}
-            className="px-10 py-4 gradient-primary rounded-xl text-white font-semibold text-lg hover:opacity-90 transition-all animate-glow"
-          >
-            Create Your Squad
-          </button>
-        </div>
-      </section>
-
-      <footer className="py-8 px-6 border-t border-lockin-border">
-        <div className="max-w-6xl mx-auto flex justify-between items-center">
+      {/* Footer */}
+      <footer className="border-t border-slate-800 mt-12">
+        <div className="max-w-5xl mx-auto px-6 py-8 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-6 h-6 gradient-primary rounded flex items-center justify-center">
-              <Lock className="w-3 h-3 text-white" />
-            </div>
-            <span className="font-semibold">LockIn</span>
+            <Zap className="h-4 w-4 text-sky-400" />
+            <span className="text-sm font-medium text-slate-400">Circadian</span>
           </div>
-          <p className="text-sm text-lockin-text-muted">
-            Built for Hack The East 2026
-          </p>
+          <p className="text-xs text-slate-600">Energy-based productivity</p>
         </div>
       </footer>
     </div>

@@ -111,13 +111,18 @@ class NudgeService:
             return "social"
 
     async def _generate_message(self, context: dict, nudge_type: str) -> str:
-        if settings.MINIMAX_API_KEY:
-            try:
-                return await self._call_minimax(context, nudge_type)
-            except Exception:
-                pass
-
-        return self._fallback_message(context, nudge_type)
+        from app.services.ai_service import generate_nudge
+        try:
+            return await generate_nudge(
+                user_name=context["user_name"],
+                friends=context["friends"],
+                user_score=context["user_score"],
+                friend_scores=context["friend_scores"],
+                minutes_focused=context["minutes_focused"],
+                nudge_type=nudge_type,
+            )
+        except Exception:
+            return self._fallback_message(context, nudge_type)
 
     async def _call_minimax(self, context: dict, nudge_type: str) -> str:
         friends_str = ", ".join(context["friends"][:3]) if context["friends"] else "Your squadmates"

@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import socketio
 from app.core.config import settings
 from app.core.database import init_db
-from app.api.endpoints import auth, squads, sessions, analytics, ml
+from app.api.endpoints import auth, squads, sessions, analytics, ml, ai
 from app.services.socket_manager import register_events
 
 
@@ -32,6 +32,7 @@ app.include_router(squads.router, prefix=settings.API_V1_PREFIX)
 app.include_router(sessions.router, prefix=settings.API_V1_PREFIX)
 app.include_router(analytics.router, prefix=settings.API_V1_PREFIX)
 app.include_router(ml.router, prefix=settings.API_V1_PREFIX)
+app.include_router(ai.router, prefix=settings.API_V1_PREFIX)
 
 
 @app.get("/health")

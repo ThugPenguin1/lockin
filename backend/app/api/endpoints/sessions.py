@@ -302,7 +302,26 @@ async def get_session_summary(
         p.user.display_name for p in session.participants
         if p.user_id != current_user.id
     ]
-    insight = _generate_local_insight(my_participant, active_friends, ranking, len(session.participants))
+    friend_scores = [
+        p.focus_score for p in session.participants
+        if p.user_id != current_user.id
+    ]
+
+    from app.services.ai_service import generate_session_summary
+    try:
+        insight = await generate_session_summary(
+            user_name=current_user.display_name,
+            focus_score=my_participant.focus_score,
+            total_minutes=round(total_seconds / 60, 1),
+            focus_minutes=round(my_participant.total_focus_seconds / 60, 1),
+            ranking=ranking,
+            squad_size=len(session.participants),
+            nudges_received=my_participant.nudges_received,
+            friends=active_friends,
+            friend_scores=friend_scores,
+        )
+    except Exception:
+        insight = _generate_local_insight(my_participant, active_friends, ranking, len(session.participants))
 
     return SessionSummary(
         session_id=session_id,

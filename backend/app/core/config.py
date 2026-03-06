@@ -17,6 +17,10 @@ class Settings(BaseSettings):
     MINIMAX_GROUP_ID: str = ""
     MINIMAX_API_URL: str = "https://api.minimaxi.chat/v1/text/chatcompletion_v2"
 
+    DEEPSEEK_API_KEY: str = ""
+    DEEPSEEK_API_URL: str = "https://api.deepseek.com/chat/completions"
+    DEEPSEEK_MODEL: str = "deepseek-chat"
+
     CORS_ORIGINS: str = "http://localhost:3000"
 
     @property

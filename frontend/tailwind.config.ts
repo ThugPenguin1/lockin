@@ -8,22 +8,6 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: {
-        lockin: {
-          bg: "#0a0a0f",
-          card: "#12121a",
-          border: "#1e1e2e",
-          primary: "#6c5ce7",
-          "primary-light": "#a29bfe",
-          secondary: "#00cec9",
-          accent: "#fd79a8",
-          success: "#00b894",
-          warning: "#fdcb6e",
-          danger: "#e17055",
-          text: "#f0f0f5",
-          "text-muted": "#8e8ea0",
-        },
-      },
       fontFamily: {
         sans: ["Inter", "system-ui", "sans-serif"],
         mono: ["JetBrains Mono", "monospace"],
@@ -36,8 +20,8 @@ const config: Config = {
       },
       keyframes: {
         glow: {
-          "0%": { boxShadow: "0 0 5px rgba(108, 92, 231, 0.3)" },
-          "100%": { boxShadow: "0 0 20px rgba(108, 92, 231, 0.6)" },
+          "0%": { boxShadow: "0 0 5px rgba(56, 189, 248, 0.3)" },
+          "100%": { boxShadow: "0 0 20px rgba(56, 189, 248, 0.6)" },
         },
         slideUp: {
           "0%": { transform: "translateY(10px)", opacity: "0" },
@@ -50,7 +34,7 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwindcss-animate")],
 };
 
 export default config;

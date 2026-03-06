@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   db:
     image: postgres:16-alpine
@@ -23,10 +21,12 @@ services:
       - "8000:8000"
     environment:
       DATABASE_URL: postgresql+asyncpg://lockin:lockin@db:5432/lockin
+      DATABASE_URL_SYNC: postgresql://lockin:lockin@db:5432/lockin
       SECRET_KEY: hackathon-secret-key-2026
       MINIMAX_API_KEY: ${MINIMAX_API_KEY:-}
       MINIMAX_GROUP_ID: ${MINIMAX_GROUP_ID:-}
-      CORS_ORIGINS: http://localhost:3000
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-sk-a6b307077e734f3e8afc977958d0ecec}
+      CORS_ORIGINS: "http://localhost:3000,http://frontend:3000"
     depends_on:
       db:
         condition: service_healthy
@@ -41,10 +41,13 @@ services:
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:8000
       NEXT_PUBLIC_WS_URL: http://localhost:8000
+      BACKEND_INTERNAL_URL: http://backend:8000
+      WATCHPACK_POLLING: "true"
     depends_on:
       - backend
     volumes:
       - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
     command: npm run dev
 
 volumes:
