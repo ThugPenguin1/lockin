@@ -1,128 +1,17 @@
-# LockIn — AI-Powered Social Study Platform
+Inspiration
 
-An AI-powered social study platform where friend groups commit to focus sessions together, with on-device attention tracking and smart accountability nudges that weaponize FOMO to turn procrastination into productivity.
+As students, we noticed that staying focused is significantly harder when you're working in isolation. We realized that peer accountability is the strongest motivator, so we asked ourselves, "What if we could digitize the 'library effect'—where seeing your friends work actually forces you to stay productive?"
+What it does
 
-## Tech Stack
+It is a social study platform where friend groups commit to shared focus sessions. The system uses on-device vision processing to track attention levels in real-time without ever recording or transmitting video. If a user’s focus slips while their friends are still working, the platform "weaponizes FOMO" by sending smart accountability nudges and social alerts to pull them back into the task. It also analyzes historical productivity patterns to recommend the best times and partners for future study sessions.
+Challenges we ran into
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React + Next.js 15 + Tailwind CSS + Framer Motion |
-| Real-time | WebSockets (Socket.IO) |
-| On-device CV | MediaPipe Face Mesh + TensorFlow.js |
-| AI/NLP | MiniMax API (contextual nudge generation) |
-| Backend | FastAPI + PostgreSQL + SQLAlchemy |
-| ML Pipeline | scikit-learn (productivity pattern analysis) |
+The biggest hurdle was ensuring total user privacy while still maintaining high-accuracy attention tracking. We had to figure out how to process complex facial landmarks and gaze patterns entirely within the user's browser so that no sensitive visual data ever leaves their machine. Balancing the "nudge" logic so it feels motivating rather than annoying also required significant fine-tuning of the alert triggers.
+Accomplishments that we're proud of
 
-## Quick Start
+We successfully built a functional end-to-end system that turns the solitary act of studying into a collective, gamified experience. We are particularly proud of the "Zero-Video" privacy architecture and the ability to generate context-aware social nudges that feel personal to the specific group dynamic.
+What we learned
 
-### Option 1: Docker (Recommended)
+We learned that when building social tools, the "human" element—like how a friend's progress affects your own—is just as important as the technical accuracy of the tracking. We also realized the importance of modular architecture; prioritizing the real-time communication between users was essential before we could layer on the more advanced behavioral analytics.
 
-```bash
-docker-compose up --build
-```
-
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Docs: http://localhost:8000/docs
-
-### Option 2: Manual Setup
-
-**Prerequisites:** Python 3.11+, Node.js 18+, PostgreSQL 15+
-
-**Database:**
-```bash
-createdb lockin
-```
-
-**Backend:**
-```bash
-cd backend
-python -m venv venv
-venv\Scripts\activate   # Windows
-pip install -r requirements.txt
-uvicorn app.main:socket_app --reload --port 8000
-```
-
-**Frontend:**
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-## Architecture
-
-```
-hackathon/
-├── backend/
-│   ├── app/
-│   │   ├── api/endpoints/    # REST API routes
-│   │   ├── core/             # Config, DB, auth
-│   │   ├── models/           # SQLAlchemy models
-│   │   ├── schemas/          # Pydantic schemas
-│   │   └── services/         # Business logic + WebSocket
-│   └── ml/                   # scikit-learn productivity analyzer
-├── frontend/
-│   └── src/
-│       ├── app/              # Next.js pages (lobby, session, summary)
-│       ├── components/       # Reusable UI components
-│       ├── hooks/            # Custom React hooks
-│       └── lib/              # API client, store, socket, attention tracker
-└── docker-compose.yml
-```
-
-## AI/ML Components
-
-### 1. On-Device Attention Tracker (Edge AI)
-- MediaPipe Face Mesh extracts 478 facial landmarks
-- Calculates gaze direction, head pose (pitch/yaw), blink rate
-- Weighted classifier: 45% gaze + 40% head pose + 15% blink pattern
-- All processing in-browser via WebAssembly — zero video transmitted
-
-### 2. Smart Nudge Engine (MiniMax API)
-- Triggers when attention drops below threshold AND friends are still focused
-- Contextual generation conditioned on: active friends, session duration, user patterns
-- Three nudge types: social, competitive, supportive
-- Falls back to template-based nudges when API unavailable
-
-### 3. Productivity Pattern Analyzer (scikit-learn)
-- Gradient Boosting Regressor trained on session features
-- Cyclic time encoding (sin/cos for hour-of-day)
-- Identifies: optimal study times, best partners, ideal group sizes
-- Generates actionable recommendations after 5+ sessions
-
-## Environment Variables
-
-### Backend (.env)
-```
-DATABASE_URL=postgresql+asyncpg://lockin:lockin@localhost:5432/lockin
-SECRET_KEY=your-secret-key
-MINIMAX_API_KEY=your-minimax-key
-CORS_ORIGINS=http://localhost:3000
-```
-
-### Frontend (.env.local)
-```
-NEXT_PUBLIC_API_URL=http://localhost:8000
-NEXT_PUBLIC_WS_URL=http://localhost:8000
-```
-
-## API Endpoints
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | /api/v1/auth/register | Create account |
-| POST | /api/v1/auth/login | Login |
-| GET | /api/v1/auth/me | Get current user |
-| POST | /api/v1/squads/ | Create squad |
-| GET | /api/v1/squads/ | Get my squads |
-| POST | /api/v1/squads/join | Join via invite code |
-| POST | /api/v1/sessions/ | Start focus session |
-| POST | /api/v1/sessions/{id}/join | Join session |
-| POST | /api/v1/sessions/{id}/leave | Leave session |
-| POST | /api/v1/sessions/attention | Submit attention data |
-| GET | /api/v1/sessions/{id}/summary | Get session summary |
-| GET | /api/v1/analytics/dashboard | User analytics |
-| GET | /api/v1/ml/recommendations | ML-powered insights |
-
-## Built for Hack The East 2026
+Would you like me to help you draft a similar "Inspiration" or "Challenges" section for any of your other previous projects, like FinMap?
